@@ -1,0 +1,55 @@
+
+      <div class="row banner" style="margin-left: 0px;margin-right: 0px;">
+        <div class="col-md-2">
+          <img src="https://tbncdn.freelogodesign.org/1185de37-7aad-432b-bac2-dfbd2eb3a493.png?1552923887301" alt="logo">
+        </div>
+        <div class="col-md-10">
+           <h1 class="text-primary text-center text-danger">Quand une fleur se gèle</h1>
+        </div>
+    </div>
+   <div class="row">
+      <div class="col-md-12">
+    <nav class="navbar navbar-expand-sm   navbar-light bg-light">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+    {% if is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')%}
+    <h4 style="margin:1%"><a class="navbar-brand" href="{{ path('Perso') }}">Bonjour {{app.user.Pseudo}}</a></h4>
+    {% else %}
+     <h4 style="margin:1%">Bienvenue</h4>
+    {% endif %}
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item">
+        <a class="nav-link" href="/">Accueil <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{path('Articles')}}">Articles</a>
+      </li>
+      {% if is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')%}
+      <li class="nav-item">
+        <a class="nav-link" href="{{path('New')}}">Nouvel Article</a>
+      </li>
+      {% else %}
+      <li class="nav-item">
+        <a class="nav-link" href="{{path('app_login')}}">Connexion</a>
+      </li>
+      {% endif %}
+      {% if is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')%}
+      <li class="nav-item">
+        <a class="nav-link" href="/logout">Deconnexion</a>
+      </li>
+      {% else %}
+      <li class="nav-item">
+        <a class="nav-link" href="{{path('app_register')}}">S'enregistrer</a>
+      </li>
+      {% endif %}
+    </ul>
+
+
+  </div>
+
+</nav>
+    </div>
+</div>
+

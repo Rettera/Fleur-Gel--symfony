@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+{% block title %}.: Articles :.{% endblock %}
+{% block body %}
+<style>
+img{
+    width: 100%;
+
+}
+article {
+    margin: 2% 0;
+}
+
+article h2 {
+    margin: 5% 0;
+}
+
+p {
+    max-height: 250px;
+    overflow: hidden;
+}
+</style>
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+    <section class="articles">
+    {% for article in articles %}
+        <articles>
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>
+                        {{article.title}}</h2>
+                    <div class="metadata">
+                        Posté par
+                        <strong><a href="{{path('auteur', {'auteur': article.auteur}) }}">
+                            {{article.auteur}}</a></strong>
+                        le<strong>
+                            {{article.createdAt | date('d/m/Y à H:i')}}</strong>
+                        dans
+                        <a href="{{path('category', {'category': article.category}) }}">
+                            {{article.category}}</a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <img src="{{article.image}}" alt="image {{article.id}}" class="img-thumbnail img-fluid"></div>
+                    <div class="col-md-4">
+                        <p class="text-justify">
+                            {{article.content}}
+                        </p>
+                        <a class="btn btn-primary" href="{{path('Article', {'id': article.id}) }}">Lire la suite</a>
+                        
+                    </div>
+                </div>
+            </articles>
+        {% endfor %}
+    </section>
+    </div>
+    <div class="col-md-3"></div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New{% endblock %}
+
+{% block body %}
+<style>
+h2, h4{
+    text-align: center;
+}
+form{
+    margin:2%
+}
+</style>
+<h2>Vous pouvez donc ajouter un article</h2>
+<h4>Veuillez remplir tous les champs</h4>
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+
+<div class="form">
+    {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+    {{ form_errors(form) }}
+    <div
+        class="form-group">
+        {# Génération du label. #}
+        {{ form_label(form.title, "Titre de l'article", {'label_attr': {'class': 'col-md-4 control-label'}}) }}
+        {# Affichage des erreurs pour ce champ précis. #}
+        {{ form_errors(form.title) }}
+        <div
+            class="col-md-12">
+            {# Génération de l'input. #}
+            {{ form_widget(form.title, {'attr': {'class': 'form-control input-md'}}) }}
+        </div>
+    </div>
+    {# Idem pour un autre champ. #}
+    <div class="form-group">
+        {{ form_label(form.image, "Image de l'article", {'label_attr': {'class': 'col-md-4 control-label'}}) }}
+        {{ form_errors(form.image) }}
+        <div class="col-md-12">
+            {{ form_widget(form.image, {'attr': {'class': 'form-control input-md'}}) }}
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(form.content, "Contenu de l'article", {'label_attr': {'class': 'col-md-4 control-label'}}) }}
+        {{ form_errors(form.content) }}
+        <div class="col-md-12">
+            {{ form_widget(form.content, {'attr': {'class': 'form-control input-md'}}) }}
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(form.category, "Type de l'article", {'label_attr': {'class': 'col-md-4 control-label'}}) }}
+        {{ form_errors(form.category) }}
+        <div class="col-md-12">
+            {{ form_widget(form.category, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+    {{ form_widget(form.Envoyer, {'attr': {'class': 'btn btn-primary'}}) }}
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+</div>
+</div>
+    </div>
+    <div class="col-md-3"></div>
+
+
+    
+
+{% endblock %}

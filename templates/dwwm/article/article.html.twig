@@ -1,0 +1,243 @@
+{% extends 'base.html.twig' %}
+{% block title %}.: Article :.{% endblock %}
+{% block body %}
+<style>
+.widget-area {
+background-color: #fff;
+-webkit-border-radius: 4px;
+-moz-border-radius: 4px;
+-ms-border-radius: 4px;
+-o-border-radius: 4px;
+border-radius: 4px;
+-webkit-box-shadow: 0 0 16px rgba(0, 0, 0, 0.05);
+-moz-box-shadow: 0 0 16px rgba(0, 0, 0, 0.05);
+-ms-box-shadow: 0 0 16px rgba(0, 0, 0, 0.05);
+-o-box-shadow: 0 0 16px rgba(0, 0, 0, 0.05);
+box-shadow: 0 0 16px rgba(0, 0, 0, 0.05);
+float: left;
+margin-top: 30px;
+padding: 25px 30px;
+position: relative;
+width: 100%;
+}
+.status-upload {
+background: none repeat scroll 0 0 #f5f5f5;
+-webkit-border-radius: 4px;
+-moz-border-radius: 4px;
+-ms-border-radius: 4px;
+-o-border-radius: 4px;
+border-radius: 4px;
+float: left;
+width: 100%;
+}
+.status-upload form {
+float: left;
+width: 100%;
+}
+.status-upload form textarea {
+background: none repeat scroll 0 0 #fff;
+border: medium none;
+-webkit-border-radius: 4px 4px 0 0;
+-moz-border-radius: 4px 4px 0 0;
+-ms-border-radius: 4px 4px 0 0;
+-o-border-radius: 4px 4px 0 0;
+border-radius: 4px 4px 0 0;
+color: #777777;
+float: left;
+font-family: Lato;
+font-size: 14px;
+height: 142px;
+letter-spacing: 0.3px;
+padding: 20px;
+width: 100%;
+resize:vertical;
+outline:none;
+border: 1px solid #F2F2F2;
+}
+
+.status-upload ul {
+float: left;
+list-style: none outside none;
+margin: 0;
+padding: 0 0 0 15px;
+width: auto;
+}
+.status-upload ul > li {
+float: left;
+}
+.status-upload ul > li > a {
+-webkit-border-radius: 4px;
+-moz-border-radius: 4px;
+-ms-border-radius: 4px;
+-o-border-radius: 4px;
+border-radius: 4px;
+color: #777777;
+float: left;
+font-size: 14px;
+height: 30px;
+line-height: 30px;
+margin: 10px 0 10px 10px;
+text-align: center;
+-webkit-transition: all 0.4s ease 0s;
+-moz-transition: all 0.4s ease 0s;
+-ms-transition: all 0.4s ease 0s;
+-o-transition: all 0.4s ease 0s;
+transition: all 0.4s ease 0s;
+width: 30px;
+cursor: pointer;
+}
+.status-upload ul > li > a:hover {
+background: none repeat scroll 0 0 #606060;
+color: #fff;
+}
+.status-upload form button {
+border: medium none;
+-webkit-border-radius: 4px;
+-moz-border-radius: 4px;
+-ms-border-radius: 4px;
+-o-border-radius: 4px;
+border-radius: 4px;
+color: #fff;
+float: right;
+font-family: Lato;
+font-size: 14px;
+letter-spacing: 0.3px;
+margin-right: 9px;
+margin-top: 9px;
+padding: 6px 15px;
+}
+.dropdown > a > span.green:before {
+border-left-color: #2dcb73;
+}
+.status-upload form button > i {
+margin-right: 7px;
+}
+
+</style>
+    <section class="articles">
+        <articles>
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+        <div class="row">
+            <div class="col-md-6">
+                <img alt="" class="img-thumbnail" src="{{article.image}}"></div>
+                <div class="col-md-6">
+                    <h1 style="margin-bottom: 10%;">
+                        {{article.title}}</h1>
+                    <h3 style="margin-bottom: 15%;">
+                        Posté par
+                        <strong><a href="{{path('auteur', {'auteur': article.auteur}) }}" >
+                            {{article.auteur}}</a></strong>
+                        le<strong>
+                            {{article.createdAt | date('d/m/Y à H:i')}}</strong>
+                        dans
+                        <a href="{{path('category', {'category': article.category}) }}">
+                            {{article.category}}</a></h3>
+                       {% if article.UpdatedAt != NULL %}
+                        <h4>Modifié le <strong> {{article.UpdatedAt | date('d/m/Y à H:i')}}</strong></h4>
+                        {% endif%}
+                        {% if is_granted('ROLE_ADMIN') %}
+                        <a class="btn btn-danger" href="{{path('tr-del', {'id': article.id}) }}" style="margin-bottom: 5%;">Supprimer</a>
+                        <a class="btn btn-success" href="{{path('update', {'id': article.id}) }}" style="margin-bottom: 5%;">Mettre à jour</a>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <p style="margin: 5%;">
+                            {{article.content}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+    
+
+            </articles>
+
+        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') %}
+         <div class="row">
+    
+    <div class="col-md-12">
+                            <div class="widget-area no-padding blank">
+                                <div class="status-upload">
+                                    {{ form_start(formul) }}
+                                        {{ form_label(formul.contenu, "Commentaire") }}
+                                        {{ form_widget(formul.contenu) }}
+                                        <ul>
+                                            <li><a title="" data-toggle="tooltip" data-placement="bottom" data-original-title="Audio"><i class="fa fa-music"></i></a></li>
+                                            <li><a title="" data-toggle="tooltip" data-placement="bottom" data-original-title="Video"><i class="fa fa-video-camera"></i></a></li>
+                                            <li><a title="" data-toggle="tooltip" data-placement="bottom" data-original-title="Sound Record"><i class="fa fa-microphone"></i></a></li>
+                                            <li><a title="" data-toggle="tooltip" data-placement="bottom" data-original-title="Picture"><i class="fa fa-picture-o"></i></a></li>
+                                        </ul>
+                                        {{ form_widget(formul.Envoyer, {'attr': {'class': 'btn btn-success green'}}) }}<i class="fa fa-share"></i>
+                                    {{ form_end(formul) }}
+                                </div><!-- Status Upload  -->
+                            </div><!-- Widget Area -->
+                        </div>
+        
+    </div>
+            {{form(formul)}}
+        {% endif%}
+        
+        {% for comment in comments %}
+        {% if comment.contenu != NULL %}
+
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-2">
+                {% if comment.contenu != NULL %}
+                <img src="{{app.user.Profil}}"/>
+                {% else %}
+                 <img src="https://image.ibb.co/jw55Ex/def_face.jpg" class="img img-rounded img-fluid"/>
+                {% endif%}
+                    <p class="text-secondary text-center">le {{comment.date| date('d/m/Y à H:i')}}</p>
+                </div>
+                <div class="col-md-10">
+                    <p>
+                        <strong>{{comment.auteur}}</strong>
+                        <span class="float-right"><i class="text-warning fa fa-star"></i></span>
+                        <span class="float-right"><i class="text-warning fa fa-star"></i></span>
+                        <span class="float-right"><i class="text-warning fa fa-star"></i></span>
+                        <span class="float-right"><i class="text-warning fa fa-star"></i></span>
+
+                   </p>
+                   <div class="clearfix"></div>
+                    <p>{{comment.contenu}}</p>
+                    <p>
+                        <a class="float-right btn btn-outline-primary ml-2"> <i class="fa fa-reply"></i> Reply</a>
+                        <a class="float-right btn text-white btn-danger"> <i class="fa fa-heart"></i> Like</a>
+                   </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+        
+        
+        
+
+        {% endif%}
+        {% endfor %}
+        </section>
+<script>
+$(document).ready(function(){
+
+    
+    $("[data-toggle=tooltip]").tooltip();
+});
+</script>
+
+
+
+
+
+    {% endblock %}
+
+
+
+
